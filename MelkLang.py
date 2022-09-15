@@ -682,7 +682,7 @@ class Parser:
         res = ParseResult()
         pos_start = self.current_tok.pos_start.copy()
 
-        if self.current_tok.matches(TT_KEYWORD, "WETURN"):
+        if self.current_tok.matches(TT_KEYWORD, "GIVEBACK"):
             res.register_advancement()
             self.advance()
 
@@ -711,7 +711,7 @@ class Parser:
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    "Expected 'WETURN', 'CONTINUWU', 'BWEAK', 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
+                    "Expected 'GIVEBACK', 'CONTINUWU', 'BWEAK', 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
                 )
             )
         return res.success(expr)

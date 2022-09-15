@@ -1,0 +1,31 @@
+#ONE LINERS
+
+POWMACHINE Melkey() -> "Melkey"
+POWMACHINE Dev() -> "Dev"
+POWMACHINE MelkeyDev() -> Melkey() + Dev()
+
+
+
+POWMACHINE SPAM() -> FOR i = 0 TO 1 THEN
+    tellusthis("POW")
+GOODBYPOW
+
+FOR i = 0 TO 999999 THEN
+
+    tellusthis("MENU")
+    tellusthis("  OPTIONS:")
+    tellusthis("   WHO IS THIS FOR?")
+    tellusthis("   GIVE ME A FIST POW")
+    tellusthis("")
+
+    make In = yougiveus()
+
+    IF In == "WHO IS THIS FOR?" THEN
+        tellusthis(MelkeyDev())
+    GOODBYPOW
+    
+
+    IF In == "GIVE ME A FIST POW" THEN
+        tellusthis("NO")
+    GOODBYPOW
+GOODBYPOW
