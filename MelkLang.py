@@ -123,7 +123,7 @@ class Position:
 # TOWOKENS
 #######################################
 
-TT_INT = "INT"
+TT_INT = "NUBMER"
 TT_FLOAT = "FLOAT"
 TT_STRING = "STRING"
 TT_IDENTIFIER = "IDENTIFIER"
@@ -150,23 +150,23 @@ TT_NEWLINE = "NEWLINE"
 TT_EOF = "EOF"
 
 KEYWORDS = [
-    "pwease",  # vawar
-    "AND",
+    "make",  # vawar
+    "ALSO",
     "OR",
-    "NOT",
+    "DONT",
     "IF",
-    "EWIF",
-    "EWSE",
+    "ORTHIS",
+    "IFNOT",
     "FOR",
     "TO",
-    "STWEP",
+    "STEPUP",
     "WHILE",
-    "FWUNCTION",
-    "THWEN",
-    "END",
-    "WETURN",
-    "CONTINUWU",
-    "BWEAK",
+    "POWMACHINE",
+    "THEN",
+    "GOODBYPOW",
+    "COMEBACK",
+    "GOAWAY",
+    "SNAPNECK",
 ]
 
 
@@ -711,7 +711,7 @@ class Parser:
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    "Expected 'WETURN', 'CONTINUWU', 'BWEAK', 'pwease', 'IF', 'FOR', 'WHILE', 'FWUNCTION', int, float, identifier, '+', '-', '(', '[' or 'NOT'",
+                    "Expected 'WETURN', 'CONTINUWU', 'BWEAK', 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
                 )
             )
         return res.success(expr)
@@ -719,7 +719,7 @@ class Parser:
     def expr(self):
         res = ParseResult()
 
-        if self.current_tok.matches(TT_KEYWORD, "pwease"):
+        if self.current_tok.matches(TT_KEYWORD, "make"):
             res.register_advancement()
             self.advance()
 
@@ -753,7 +753,7 @@ class Parser:
             return res.success(VarAssignNode(var_name, expr))
 
         node = res.register(
-            self.bin_op(self.comp_expr, ((TT_KEYWORD, "AND"), (TT_KEYWORD, "OR")))
+            self.bin_op(self.comp_expr, ((TT_KEYWORD, "ALSO"), (TT_KEYWORD, "OR")))
         )
 
         if res.error:
@@ -761,7 +761,7 @@ class Parser:
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    "Expwected 'pwease', 'IF', 'FOR', 'WHILE', 'FWUNCTION', int, float, identifier, '+', '-', '(', '[' or 'NOT'",
+                    "Expwected 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
                 )
             )
 
@@ -770,7 +770,7 @@ class Parser:
     def comp_expr(self):
         res = ParseResult()
 
-        if self.current_tok.matches(TT_KEYWORD, "NOT"):
+        if self.current_tok.matches(TT_KEYWORD, "DONT"):
             op_tok = self.current_tok
             res.register_advancement()
             self.advance()
@@ -789,7 +789,7 @@ class Parser:
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    "Expwected int, float, identifier, '+', '-', '(', '[', 'IF', 'FOR', 'WHILE', 'FWUNCTION' or 'NOT'",
+                    "Expwected int, float, identifier, '+', '-', '(', '[', 'IF', 'FOR', 'WHILE', 'POWMACHINE' or 'DONT'",
                 )
             )
 
@@ -839,7 +839,7 @@ class Parser:
                         InvalidSyntaxError(
                             self.current_tok.pos_start,
                             self.current_tok.pos_end,
-                            "Expwected ')', 'pwease', 'IF', 'FOR', 'WHILE', 'FWUNCTION', int, float, identifier, '+', '-', '(', '[' or 'NOT'",
+                            "Expwected ')', 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
                         )
                     )
 
@@ -927,7 +927,7 @@ class Parser:
                 return res
             return res.success(while_expr)
 
-        elif tok.matches(TT_KEYWORD, "FWUNCTION"):
+        elif tok.matches(TT_KEYWORD, "POWMACHINE"):
             func_def = res.register(self.func_def())
             if res.error:
                 return res
@@ -937,7 +937,7 @@ class Parser:
             InvalidSyntaxError(
                 tok.pos_start,
                 tok.pos_end,
-                "Expwected int, float, identifier, '+', '-', '(', '[', IF', 'FOR', 'WHILE', 'FWUNCTION'",
+                "Expwected int, float, identifier, '+', '-', '(', '[', IF', 'FOR', 'WHILE', 'POWMACHINE'",
             )
         )
 
@@ -968,7 +968,7 @@ class Parser:
                     InvalidSyntaxError(
                         self.current_tok.pos_start,
                         self.current_tok.pos_end,
-                        "Expwected ']', 'pwease', 'IF', 'FOR', 'WHILE', 'FWUNCTION', int, float, identifier, '+', '-', '(', '[' or 'NOT'",
+                        "Expwected ']', 'make', 'IF', 'FOR', 'WHILE', 'POWMACHINE', int, float, identifier, '+', '-', '(', '[' or 'DONT'",
                     )
                 )
 
@@ -1005,7 +1005,7 @@ class Parser:
         return res.success(IfNode(cases, else_case))
 
     def if_expr_b(self):
-        return self.if_expr_cases("EWIF")
+        return self.if_expr_cases("ORTHIS")
 
     def if_expr_c(self):
         res = ParseResult()
@@ -1024,7 +1024,7 @@ class Parser:
                     return res
                 else_case = (statements, True)
 
-                if self.current_tok.matches(TT_KEYWORD, "END"):
+                if self.current_tok.matches(TT_KEYWORD, "GOODBYPOW"):
                     res.register_advancement()
                     self.advance()
                 else:
@@ -1032,7 +1032,7 @@ class Parser:
                         InvalidSyntaxError(
                             self.current_tok.pos_start,
                             self.current_tok.pos_end,
-                            "Expwected 'END'",
+                            "Expwected 'GOODBYPOW'",
                         )
                     )
             else:
@@ -1047,7 +1047,7 @@ class Parser:
         res = ParseResult()
         cases, else_case = [], None
 
-        if self.current_tok.matches(TT_KEYWORD, "EWIF"):
+        if self.current_tok.matches(TT_KEYWORD, "ORTHIS"):
             all_cases = res.register(self.if_expr_b())
             if res.error:
                 return res
@@ -1080,12 +1080,12 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_tok.matches(TT_KEYWORD, "THWEN"):
+        if not self.current_tok.matches(TT_KEYWORD, "THEN"):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    f"Expwected 'THWEN'",
+                    f"Expwected 'THEN'",
                 )
             )
 
@@ -1101,7 +1101,7 @@ class Parser:
                 return res
             cases.append((condition, statements, True))
 
-            if self.current_tok.matches(TT_KEYWORD, "END"):
+            if self.current_tok.matches(TT_KEYWORD, "GOODBYPOW"):
                 res.register_advancement()
                 self.advance()
             else:
@@ -1194,12 +1194,12 @@ class Parser:
         else:
             step_value = None
 
-        if not self.current_tok.matches(TT_KEYWORD, "THWEN"):
+        if not self.current_tok.matches(TT_KEYWORD, "THEN"):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    f"Expected 'THWEN'",
+                    f"Expected 'THEN'",
                 )
             )
 
@@ -1214,12 +1214,12 @@ class Parser:
             if res.error:
                 return res
 
-            if not self.current_tok.matches(TT_KEYWORD, "END"):
+            if not self.current_tok.matches(TT_KEYWORD, "GOODBYPOW"):
                 return res.failure(
                     InvalidSyntaxError(
                         self.current_tok.pos_start,
                         self.current_tok.pos_end,
-                        f"Expwected 'END'",
+                        f"Expwected 'GOODBYPOW'",
                     )
                 )
 
@@ -1257,12 +1257,12 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_tok.matches(TT_KEYWORD, "THWEN"):
+        if not self.current_tok.matches(TT_KEYWORD, "THEN"):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    f"Expwected 'THWEN'",
+                    f"Expwected 'THEN'",
                 )
             )
 
@@ -1277,12 +1277,12 @@ class Parser:
             if res.error:
                 return res
 
-            if not self.current_tok.matches(TT_KEYWORD, "END"):
+            if not self.current_tok.matches(TT_KEYWORD, "GOODBYPOW"):
                 return res.failure(
                     InvalidSyntaxError(
                         self.current_tok.pos_start,
                         self.current_tok.pos_end,
-                        f"Expwected 'END'",
+                        f"Expwected 'GOODBYPOW'",
                     )
                 )
 
@@ -1300,12 +1300,12 @@ class Parser:
     def func_def(self):
         res = ParseResult()
 
-        if not self.current_tok.matches(TT_KEYWORD, "FWUNCTION"):
+        if not self.current_tok.matches(TT_KEYWORD, "POWMACHINE"):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    f"Expwected 'FWUNCTION'",
+                    f"Expwected 'POWMACHINE'",
                 )
             )
 
@@ -1408,12 +1408,12 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_tok.matches(TT_KEYWORD, "END"):
+        if not self.current_tok.matches(TT_KEYWORD, "GOODBYPOW"):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_tok.pos_start,
                     self.current_tok.pos_end,
-                    f"Expwected 'END'",
+                    f"Expwected 'GOODBYPOW'",
                 )
             )
 
@@ -2339,7 +2339,7 @@ class Interpreter:
             result, error = left.get_comparison_lte(right)
         elif node.op_tok.type == TT_GTE:
             result, error = left.get_comparison_gte(right)
-        elif node.op_tok.matches(TT_KEYWORD, "AND"):
+        elif node.op_tok.matches(TT_KEYWORD, "ALSO"):
             result, error = left.anded_by(right)
         elif node.op_tok.matches(TT_KEYWORD, "OR"):
             result, error = left.ored_by(right)
@@ -2359,7 +2359,7 @@ class Interpreter:
 
         if node.op_tok.type == TT_MINUS:
             number, error = number.multed_by(Number(-1))
-        elif node.op_tok.matches(TT_KEYWORD, "NOT"):
+        elif node.op_tok.matches(TT_KEYWORD, "DONT"):
             number, error = number.notted()
 
         if error:
@@ -2545,25 +2545,25 @@ class Interpreter:
 #######################################
 
 global_symbol_table = SymbolTable()
-global_symbol_table.set("nwull", Number.null)
-global_symbol_table.set("fawse", Number.false)
-global_symbol_table.set("twue", Number.true)
-global_symbol_table.set("mwath_pwi", Number.math_PI)
-global_symbol_table.set("pwint", BuiltInFunction.print)
-global_symbol_table.set("pwint_ret", BuiltInFunction.print_ret)
-global_symbol_table.set("inpwt", BuiltInFunction.input)
-global_symbol_table.set("inpwt_int", BuiltInFunction.input_int)
-global_symbol_table.set("cwear", BuiltInFunction.clear)
-global_symbol_table.set("cls", BuiltInFunction.clear)
-global_symbol_table.set("is_nwm", BuiltInFunction.is_number)
-global_symbol_table.set("is_stwr", BuiltInFunction.is_string)
-global_symbol_table.set("is_wist", BuiltInFunction.is_list)
-global_symbol_table.set("is_fwn", BuiltInFunction.is_function)
-global_symbol_table.set("appwend", BuiltInFunction.append)
-global_symbol_table.set("pwp", BuiltInFunction.pop)
-global_symbol_table.set("extwend", BuiltInFunction.extend)
-global_symbol_table.set("lwen", BuiltInFunction.len)
-global_symbol_table.set("rwun", BuiltInFunction.run)
+global_symbol_table.set("nothinbruv", Number.null)
+global_symbol_table.set("not_true", Number.false)
+global_symbol_table.set("true", Number.true)
+global_symbol_table.set("pie", Number.math_PI)
+global_symbol_table.set("tellusthis", BuiltInFunction.print)
+global_symbol_table.set("tellusthenreturn", BuiltInFunction.print_ret)
+global_symbol_table.set("yougiveus", BuiltInFunction.input)
+global_symbol_table.set("yougiveus_int", BuiltInFunction.input_int)
+global_symbol_table.set("CLEAR", BuiltInFunction.clear)
+global_symbol_table.set("ALSOCLEAR", BuiltInFunction.clear)
+global_symbol_table.set("is_a_fluffing_number", BuiltInFunction.is_number)
+global_symbol_table.set("is_this_text", BuiltInFunction.is_string)
+global_symbol_table.set("is_fluffing_list", BuiltInFunction.is_list)
+global_symbol_table.set("is_func", BuiltInFunction.is_function)
+global_symbol_table.set("addtothisshit", BuiltInFunction.append)
+global_symbol_table.set("POP", BuiltInFunction.pop)
+global_symbol_table.set("enlarge", BuiltInFunction.extend)
+global_symbol_table.set("how_tall", BuiltInFunction.len)
+global_symbol_table.set("POWIT", BuiltInFunction.run)
 
 
 def run(fn, text):

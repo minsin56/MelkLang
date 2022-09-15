@@ -1,0 +1,12 @@
+#HELLO MELKEY, I AM ACTUALLLY MAKING THIS
+
+FOR i = 0 TO 5 THEN
+
+    make MelkeyDevWordToSay = "FLUFFING HELL MAN"
+    make SayIt = i == 2
+    make IsSayItANumber = is_a_fluffing_number(SayIt)
+    IF IsSayItANumber THEN 
+        tellusthis(MelkeyDevWordToSay)
+    GOODBYPOW
+
+GOODBYPOW
